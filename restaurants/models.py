@@ -31,7 +31,7 @@ class Restaurant(models.Model):
     address = models.CharField(max_length=255)
     phone = models.CharField(max_length=255)
     capacity = models.IntegerField()
-    image = models.CharField(max_length=255, null=True)
+    image = models.URLField(max_length=255, null=True)
     description = models.TextField(null=True)
     opening_time = models.TimeField()
     closing_time = models.TimeField()
