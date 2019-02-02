@@ -4,7 +4,9 @@
     <ul>
       {% for restaurant in restaurants %}
       <li>
-        {{ restaurant.name }}
+        <a href="{% url 'restaurant_show' id=restaurant.pk %}">
+          {{ restaurant.name }}
+        </a>
       </li>
       {% endfor %}
     </ul>
