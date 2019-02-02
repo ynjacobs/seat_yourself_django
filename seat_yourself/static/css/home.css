@@ -1,0 +1,52 @@
+header {
+  background-image: url('../images/empty_table.jpg');
+  background-size: cover;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+}
+
+header a {
+  color: #ffffed;
+  font-size: 5em;
+  transition: 0.3s ease all;
+}
+
+header a:hover {
+  color: #ededdb;
+  transition: 0.3s ease all;
+}
+
+.underline {
+  position: relative;
+}
+
+.underline::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  height: 2px;
+  width: 0%;
+  left: 5%;
+  background-color: #ededdb;
+  transition: 0.3s ease all;
+}
+
+header .underline:hover::after {
+  width: 90%;
+  transition: 0.3s ease all;
+}
+
+.logo {
+  position: absolute;
+  top: 1em;
+  left: 1em;
+}
+
+.logo::before {
+  color: #fffeed;
+  font-size: 2.5em;
+}
