@@ -33,6 +33,8 @@ class Restaurant(models.Model):
     capacity = models.IntegerField()
     image = models.CharField(max_length=255, null=True)
     description = models.TextField(null=True)
+    opening_time = models.TimeField()
+    closing_time = models.TimeField()
 
     def __str__(self):
         return self.name
@@ -41,10 +43,11 @@ class Reservation(models.Model):
     user = models.ForeignKey(User, related_name='reservations_made', on_delete=models.CASCADE)
     restaurant = models.ForeignKey(Restaurant, related_name='reservations', on_delete=models.CASCADE)
     party_size = models.IntegerField()
-    datetime = models.DateTimeField()
+    date = models.DateField()
+    time = models.TimeField()
     created_at = models.DateTimeField(auto_now_add=True)
     notes = models.TextField(null=True)
 
     def __str__(self):
-        return "{} - party of {}".format(self.datetime, self.party_size)
+        return "{} {} - party of {}".format(self.date, self.time, self.party_size)
 
