@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="{% static 'css/home.css' %}">
   </head>
   <body>
-    <i class="logo fas fa-utensils"></i>
+    {% include '_nav.html' %}
     <header>
       <a href="{% url 'restaurants_list' %}" class="underline"><h1>Find your table</h1></a>
     </header>
