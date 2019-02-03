@@ -1,8 +1,8 @@
 import datetime as dt
 from datetime import datetime, timedelta
 from django.core.exceptions import ValidationError
-from django.forms import (CharField, DateField, DateInput,
-    IntegerField, ModelForm, Textarea, TimeField, TimeInput)
+from django.forms import (CharField, DateField, DateInput, Form,
+    IntegerField, ModelForm, PasswordInput, Textarea, TimeField, TimeInput)
 from restaurants.models import Reservation
 
 class ReservationForm(ModelForm):
@@ -61,3 +61,7 @@ class ReservationForm(ModelForm):
             self.add_error('time', 'Restaurant is booked at that time')
 
         return cleaned_data
+
+class LoginForm(Form):
+    username = CharField(label="User Name", max_length=64)
+    password = CharField(widget=PasswordInput())
