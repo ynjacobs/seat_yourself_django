@@ -40,9 +40,13 @@ def login_view(request):
                     login(request, user)
                     return redirect(reverse('home'))
                 else:
-                    print("The account has been disabled.")
+                    form.add_error('username', 'This account has been disabled')
+                    context = {'form': form}
+                    return render(request, 'login.html', context)
             else:
-                print("The username and/or password is incorrect.")
+                form.add_error('username', 'Login failed')
+                context = {'form': form}
+                return render(request, 'login.html', context)
     else:
         form = LoginForm()
         context = {'form': form}
