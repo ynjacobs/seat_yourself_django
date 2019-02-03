@@ -1,8 +1,9 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.shortcuts import render, reverse, redirect
-from restaurants.forms import ReservationForm, LoginForm
-from restaurants.models import Restaurant
+from django.views.decorators.http import require_http_methods
+from restaurants.forms import LoginForm, ProfileForm, ReservationForm
+from restaurants.models import Profile, Restaurant
 
 def restaurants_list(request):
     restaurants = Restaurant.objects.all()
@@ -15,6 +16,7 @@ def restaurant_show(request, id):
     context = {'restaurant': restaurant, 'reservation_form': form, 'title': restaurant.name}
     return render(request, 'restaurant_details.html', context)
 
+@require_http_methods(["POST"])
 def reservation_create(request, restaurant_id):
     restaurant = Restaurant.objects.get(pk=restaurant_id)
     form = ReservationForm(request.POST)
@@ -55,3 +57,21 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return redirect(reverse('home'))
+
+def profile(request):
+    context = {'title': 'Profile'}
+    if not Profile.exists_for_user(request.user):
+        form = ProfileForm()
+        context['form'] = form
+    return render(request, 'profile.html', context)
+
+@require_http_methods(["POST"])
+def profile_create(request):
+    form = ProfileForm(request.POST)
+    form.instance.user = request.user
+    if form.is_valid():
+        form.save()
+        return redirect(reverse('user_profile'))
+    else:
+        context = {'title': 'Profile', 'form': form}
+        return render(request, 'profile.html', context)

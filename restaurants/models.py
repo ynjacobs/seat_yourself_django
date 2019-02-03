@@ -7,12 +7,17 @@ class Profile(models.Model):
     last_name = models.CharField(max_length=255)
     email = models.CharField(max_length=255)
     phone = models.CharField(max_length=255, null=True)
+    user = models.OneToOneField(User, related_name='profile', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.full_name()
 
     def full_name(self):
         return "{} {}".format(self.first_name, self.last_name)
+
+    @classmethod
+    def exists_for_user(self, user):
+        return Profile.objects.filter(user_id=user.id).exists()
 
 
 class Category(models.Model):

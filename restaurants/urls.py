@@ -7,4 +7,6 @@ urlpatterns = [
     path('restaurants/<int:restaurant_id>/reservations/create/', views.reservation_create, name='reservation_create'),
     path('login/', views.login_view, name="login"),
     path('logout/', views.logout_view, name="logout"),
+    path('profile/', views.profile, name="user_profile"),
+    path('profiles/create', views.profile_create, name="profile_create"),
 ]
