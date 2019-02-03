@@ -1,4 +1,6 @@
-from django.shortcuts import render
+from django.contrib.auth.models import User
+from django.http import HttpResponseRedirect
+from django.shortcuts import render, reverse
 from restaurants.forms import ReservationForm
 from restaurants.models import Restaurant
 
@@ -14,4 +16,14 @@ def restaurant_show(request, id):
     return render(request, 'restaurant_details.html', context)
 
 def reservation_create(request, restaurant_id):
-    pass
+    restaurant = Restaurant.objects.get(pk=restaurant_id)
+    form = ReservationForm(request.POST)
+    reservation = form.instance
+    reservation.restaurant = restaurant
+    reservation.user = User.objects.all()[0]
+    if form.is_valid():
+        form.save()
+        return HttpResponseRedirect(reverse('restaurant_show', args=[restaurant.pk]))
+    else:
+        context = {'restaurant': restaurant, 'reservation_form': form, 'title': restaurant.name}
+        return render(request, 'restaurant_details.html', context)
