@@ -47,3 +47,7 @@ def login_view(request):
         form = LoginForm()
         context = {'form': form}
         return render(request, 'login.html', context)
+
+def logout_view(request):
+    logout(request)
+    return redirect(reverse('home'))
