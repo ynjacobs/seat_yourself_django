@@ -1,5 +1,6 @@
-from django.db import models
 from django.contrib.auth.models import User
+from django.db import models
+from django.db.models import Sum
 
 class Profile(models.Model):
     first_name = models.CharField(max_length=255)
@@ -39,6 +40,14 @@ class Restaurant(models.Model):
     def __str__(self):
         return self.name
 
+    def open_past_midnight(self):
+        return self.closing_time < self.opening_time
+
+    def room_for(self, date, time, number_of_people):
+        reserved_seats = self.reservations.filter(date=date, time=time).aggregate(Sum('party_size'))
+        reserved_seats = reserved_seats['party_size__sum'] or 0
+        return (reserved_seats + number_of_people) <= self.capacity
+
 class Reservation(models.Model):
     user = models.ForeignKey(User, related_name='reservations_made', on_delete=models.CASCADE)
     restaurant = models.ForeignKey(Restaurant, related_name='reservations', on_delete=models.CASCADE)
@@ -46,7 +55,7 @@ class Reservation(models.Model):
     date = models.DateField()
     time = models.TimeField()
     created_at = models.DateTimeField(auto_now_add=True)
-    notes = models.TextField(null=True)
+    notes = models.TextField(blank=True)
 
     def __str__(self):
         return "{} {} - party of {}".format(self.date, self.time, self.party_size)
