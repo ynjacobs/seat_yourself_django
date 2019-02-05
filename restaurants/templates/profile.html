@@ -8,5 +8,15 @@
     </form>
   {% else %}
     <p>{{ request.user.profile.full_name}}</p>
+    {% if request.user.owned_restaurants.exists %}
+      <h2>My restaurants</h2>
+        <ul>
+          {% for restaurant in request.user.owned_restaurants.all %}
+            <li>
+              {{ restaurant.name }}
+            </li>
+          {% endfor %}
+        </ul>
+    {% endif %}
   {% endif %}
 {% endblock %}
