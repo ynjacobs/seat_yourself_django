@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 {{ category.name }}
+<img src="{{ category.image }}" alt="A {{ category.name }} restaurant">
 <ul>
   {% for restaurant in category.restaurants.all %}
   <li>

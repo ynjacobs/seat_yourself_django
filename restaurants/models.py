@@ -29,6 +29,9 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+    def image(self):
+        return self.restaurants.all()[0].image
+
 class Restaurant(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='owned_restaurants')
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, related_name='restaurants')
