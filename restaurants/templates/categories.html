@@ -4,7 +4,6 @@
   {% for category in categories %}
   <li>
     <a href="{% url 'category_show' id=category.pk %}">
-      <div class="backdrop"> </div>
       <span class="title-text"> {{ category.name }} </span>
       <img src="{{ category.image }}" alt="A {{ category.name }} restaurant">
     </a>
