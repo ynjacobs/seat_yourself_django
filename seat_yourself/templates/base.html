@@ -18,8 +18,10 @@
       <h1><a href="{% url 'home' %}">Seat Yourself</a></h1>
       {% include '_nav.html' %}
     </header>
-    {% block content %}
-    {% endblock %}
+    <main>
+      {% block content %}
+      {% endblock %}
+    </main>
     <footer> Copyright Bitmaker Labs </footer>
   </body>
 </html>
