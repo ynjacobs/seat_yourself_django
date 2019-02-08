@@ -2,24 +2,24 @@
   <i class="logo fas fa-utensils"></i>
   <ul>
     <li>
-      <a href="{% url 'restaurants_list' %}">All restaurants</a>
+      <a class="underline" href="{% url 'restaurants_list' %}">All restaurants</a>
     </li>
     <li>
-      <a href="{% url 'categories_list' %}">Browse by cuisine</a>
+      <a class="underline" href="{% url 'categories_list' %}">Browse by cuisine</a>
     </li>
       {% if request.user.is_authenticated %}
         <li>
-          <a href="{% url 'user_profile' %}">My Profile</a>
+          <a class="underline" href="{% url 'user_profile' %}">My Profile</a>
         </li>
         <li>
-          <a  href="{% url 'logout' %}">Logout</a>
+          <a class="underline"  href="{% url 'logout' %}">Logout</a>
         </li>
       {% else %}
         <li>
-          <a  href="{% url 'login' %}">Login</a>
+          <a class="underline"  href="{% url 'login' %}">Login</a>
         </li>
         <li>
-          <a  href="{% url 'signup' %}">Sign up</a>
+          <a class="underline"  href="{% url 'signup' %}">Sign up</a>
         </li>
       {% endif %}
   </ul>
