@@ -1,13 +1,15 @@
 {% extends 'base.html' %}
 {% block content %}
-<ul class="gallery">
-  {% for category in categories %}
-  <li>
-    <a href="{% url 'category_show' id=category.pk %}">
-      <span class="title-text"> {{ category.name }} </span>
-      <img src="{{ category.image }}" alt="A {{ category.name }} restaurant">
-    </a>
-  </li>
-  {% endfor %}
-</ul>
+<main class='category_list'>
+  <ul class="gallery">
+    {% for category in categories %}
+    <li>
+      <a href="{% url 'category_show' id=category.pk %}">
+        <span class="title-text"> {{ category.name }} </span>
+        <img src="{{ category.image }}" alt="A {{ category.name }} restaurant">
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+</main>
 {% endblock %}

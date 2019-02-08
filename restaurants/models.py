@@ -68,3 +68,8 @@ class Reservation(models.Model):
     def __str__(self):
         return "{} {} - party of {}".format(self.date, self.time, self.party_size)
 
+    def date_and_time(self):
+        date = self.date.strftime("%Y-%m-%d")
+        time = self.time.strftime("%H:%M")
+        return "{} {}".format(date, time)
+

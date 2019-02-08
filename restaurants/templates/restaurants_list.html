@@ -1,15 +1,17 @@
 {% extends 'base.html' %}
 {% block content %}
-  <section>
-    <ul class="gallery">
-      {% for restaurant in restaurants %}
-      <li>
-        <a href="{% url 'restaurant_show' id=restaurant.pk %}">
-          <span class="title-text">{{ restaurant.name }}</span>
-          <img src="{{ restaurant.image }}" alt="{{ restaurant.name }}">
-        </a>
-      </li>
-      {% endfor %}
-    </ul>
-  </section>
+<main class='restaurants_list'>
+    <section>
+      <ul class="gallery">
+        {% for restaurant in restaurants %}
+        <li>
+          <a href="{% url 'restaurant_show' id=restaurant.pk %}">
+            <span class="title-text">{{ restaurant.name }}</span>
+            <img src="{{ restaurant.image }}" alt="{{ restaurant.name }}">
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+    </section>
+</main>
 {% endblock %}

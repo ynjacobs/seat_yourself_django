@@ -42,13 +42,11 @@ nav {
 nav ul {
   display: flex;
   justify-content: space-evenly;
-  padding: 0;
 }
 
 .gallery {
   display: grid;
   grid-template-columns: repeat(3, minmax(300px, 500px));
-  padding: 0;
   margin: 0 auto;
   max-width: 1500px;
 }
@@ -108,14 +106,31 @@ footer {
   line-height: 60px;
 }
 
+.owned-restaurants li {
+  border-bottom: 1px solid #333;
+  padding: 45px;
+}
+
+main.profile {
+  padding: 30px;
+}
+
+.my-reservations li {
+  padding: 10px;
+}
+
+.profile li:nth-child(odd) {
+  background: #efefef;
+}
+
 @media screen and (max-width: 900px){
   .gallery {
-  grid-template-columns: repeat(2, minmax(300px, 1fr));
+    grid-template-columns: repeat(2, minmax(300px, 1fr));
   }
 }
 
 @media screen and (max-width: 600px){
   .gallery {
-  grid-template-columns: minmax(300px, 1fr);
+    grid-template-columns: minmax(300px, 1fr);
   }
 }

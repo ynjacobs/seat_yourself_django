@@ -17,3 +17,7 @@ a {
 li {
   list-style-type: none;
 }
+
+ul, ol {
+  padding: 0;
+}
