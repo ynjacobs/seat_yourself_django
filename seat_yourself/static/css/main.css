@@ -123,14 +123,84 @@ main.profile {
   background: #efefef;
 }
 
+form {
+  display: block;
+  margin: 0;
+  padding: 1em;
+}
+
+input,
+textarea {
+  display: inline-block;
+  font-family: Georgia, Times, serif;
+}
+
+
+[type=radio],
+[type=checkbox] {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+form p, form fieldset {
+  margin-bottom: 1em;
+}
+
+label {
+  display: inline-block;
+  width: 20%;
+}
+
+fieldset > label {
+  width: auto;
+}
+
+[type=text],
+[type=email] {
+  padding: 0.25em 0.5em;
+}
+
 @media screen and (max-width: 900px){
   .gallery {
     grid-template-columns: repeat(2, minmax(300px, 1fr));
   }
 }
 
+@media screen and (max-width: 700px){
+  header {
+    /* height: auto; */
+    grid-template-columns: auto;
+    padding: 0px 1em;
+  }
+
+  header h1 {
+    display: none;
+  }
+}
+
 @media screen and (max-width: 600px){
   .gallery {
     grid-template-columns: minmax(300px, 1fr);
+  }
+}
+
+@media screen and (max-width: 550px){
+  header li {
+    width: 100%;
+    text-align: right;
+    margin: 0 10px;
+    line-height: 40px;
+  }
+
+  header {
+    height: auto;
+  }
+
+  header ul {
+    flex-wrap: wrap;
+  }
+
+  label {
+    width: auto;
   }
 }
