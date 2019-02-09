@@ -2,9 +2,9 @@ import datetime as dt
 from datetime import datetime, timedelta
 from django.core.exceptions import ValidationError
 from django.forms import (CharField, DateField, DateInput,
-     EmailField, Form, IntegerField, ModelForm, PasswordInput,
-     Textarea, TimeField, TimeInput)
-from restaurants.models import Profile, Reservation
+     EmailField, Form, IntegerField, ModelChoiceField, ModelForm,
+     PasswordInput, Textarea, TimeField, TimeInput, URLField)
+from restaurants.models import Category, Profile, Reservation, Restaurant
 
 class ReservationForm(ModelForm):
     party_size = IntegerField()
@@ -63,6 +63,21 @@ class ReservationForm(ModelForm):
 
         return cleaned_data
 
+class RestaurantForm(ModelForm):
+    opening_time = TimeField(widget=TimeInput(attrs={'type': 'time' }))
+    closing_time = TimeField(widget=TimeInput(attrs={'type': 'time' }))
+    name = CharField()
+    address = CharField()
+    phone = CharField()
+    capacity = IntegerField()
+    image = URLField()
+    description = Textarea()
+    category = ModelChoiceField(queryset=Category.objects.all())
+
+    class Meta:
+        model = Restaurant
+        fields = ['name', 'description', 'address', 'phone', 'capacity', 'opening_time', 'closing_time', 'image', 'category']
+
 class ProfileForm(ModelForm):
     first_name = CharField()
     last_name = CharField()
@@ -70,7 +85,7 @@ class ProfileForm(ModelForm):
     phone = CharField()
 
     class Meta:
-        model =Profile
+        model = Profile
         fields = ['first_name', 'last_name', 'email', 'phone']
 
 class LoginForm(Form):

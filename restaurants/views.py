@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.shortcuts import render, reverse, redirect
 from django.views.decorators.http import require_http_methods
-from restaurants.forms import LoginForm, ProfileForm, ReservationForm
+from restaurants.forms import LoginForm, ProfileForm, ReservationForm, RestaurantForm
 from restaurants.models import Category, Profile, Restaurant
 
 def restaurants_list(request):
@@ -13,9 +13,23 @@ def restaurants_list(request):
 
 def restaurant_show(request, id):
     restaurant = Restaurant.objects.get(pk=id)
+    reservations = restaurant.reservations.filter(user=request.user)
     form = ReservationForm()
-    context = {'restaurant': restaurant, 'reservation_form': form, 'title': restaurant.name}
+    context = {'restaurant': restaurant, 'reservations': reservations, 'reservation_form': form, 'title': restaurant.name}
     return render(request, 'restaurant_details.html', context)
+
+def restaurant_edit(request, id):
+    restaurant = Restaurant.objects.get(pk=id)
+    if request.method == 'POST':
+        form = RestaurantForm(request.POST, instance=restaurant)
+        if form.is_valid():
+            resto = form.save()
+            return redirect(reverse('restaurant_show', args=[restaurant.pk]))
+    else:
+        form = RestaurantForm(instance=restaurant)
+        title = "Edit {}".format(restaurant.name)
+        context = {'restaurant': restaurant, 'form': form, 'title': title}
+        return render(request, 'restaurant_edit.html', context)
 
 def categories_list(request):
     categories = Category.objects.all()

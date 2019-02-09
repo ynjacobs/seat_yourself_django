@@ -21,6 +21,9 @@
                 <p> {{ reservation.restaurant.name }} </p>
                 <p> {{ reservation.restaurant.address }} </p>
                 <p> Table for {{ reservation.party_size }} </p>
+                {% if reservation.notes %}
+                  <p class='notes'>{{ reservation.notes }}</p>
+                {% endif %}
               </li>
             {% endfor %}
           </ol>
