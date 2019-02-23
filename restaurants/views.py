@@ -1,7 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
-from django.shortcuts import render, reverse, redirect
+from django.shortcuts import render, reverse, redirect, get_object_or_404
 from django.views.decorators.http import require_http_methods
 from restaurants.forms import LoginForm, ProfileForm, ReservationForm, RestaurantForm
 from restaurants.models import Category, Profile, Restaurant
@@ -13,13 +13,15 @@ def restaurants_list(request):
 
 def restaurant_show(request, id):
     restaurant = Restaurant.objects.get(pk=id)
-    reservations = restaurant.reservations.filter(user=request.user)
-    form = ReservationForm()
-    context = {'restaurant': restaurant, 'reservations': reservations, 'reservation_form': form, 'title': restaurant.name}
+    context = {'restaurant': restaurant, 'title': restaurant.name}
+    if request.user.is_authenticated:
+        context['reservations'] = restaurant.reservations.filter(user=request.user)
+        context['reservation_form'] = ReservationForm()
     return render(request, 'restaurant_details.html', context)
 
+@login_required
 def restaurant_edit(request, id):
-    restaurant = Restaurant.objects.get(pk=id)
+    restaurant = get_object_or_404(Restaurant, pk=id, owner=request.user)
     if request.method == 'POST':
         form = RestaurantForm(request.POST, instance=restaurant)
         if form.is_valid():
@@ -41,6 +43,7 @@ def category_show(request, id):
     context = {'category': category}
     return render(request, 'category.html', context)
 
+@login_required
 @require_http_methods(["POST"])
 def reservation_create(request, restaurant_id):
     restaurant = Restaurant.objects.get(pk=restaurant_id)
@@ -56,6 +59,8 @@ def reservation_create(request, restaurant_id):
         return render(request, 'restaurant_details.html', context)
 
 def login_view(request):
+    if request.user.is_authenticated:
+        return redirect(reverse('user_profile'))
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
@@ -68,21 +73,19 @@ def login_view(request):
                     return redirect(reverse('home'))
                 else:
                     form.add_error('username', 'This account has been disabled')
-                    context = {'form': form}
-                    return render(request, 'login.html', context)
             else:
                 form.add_error('username', 'Login failed')
-                context = {'form': form}
-                return render(request, 'login.html', context)
     else:
         form = LoginForm()
-        context = {'form': form}
-        return render(request, 'login.html', context)
+
+    context = {'form': form}
+    return render(request, 'login.html', context)
 
 def logout_view(request):
     logout(request)
     return redirect(reverse('home'))
 
+@login_required
 def profile(request):
     context = {'title': 'Profile'}
     if not Profile.exists_for_user(request.user):
@@ -90,6 +93,7 @@ def profile(request):
         context['form'] = form
     return render(request, 'profile.html', context)
 
+@login_required
 @require_http_methods(["POST"])
 def profile_create(request):
     form = ProfileForm(request.POST)
@@ -102,6 +106,8 @@ def profile_create(request):
         return render(request, 'profile.html', context)
 
 def signup(request):
+    if request.user.is_authenticated:
+        return redirect(reverse('user_profile'))
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
