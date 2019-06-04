@@ -8,7 +8,12 @@
     <h3>Closing Time: {{ restaurant.closing_time }}</h3>
     <h3>Address: {{ restaurant.address }}</h3>
     <h3>Number: {{ restaurant.phone }}</h3>
-    
+    <h4>Other restaurants by this owner:</h4>
+   <ul>
+     {% for restaurant in restaurants %}
+         <li><a href=“{% url 'restaurant_show' id=restaurant.pk %}“>{{ restaurant.name }}</a></li>
+     {% endfor %}
+   </ul>
 
     
     {% if user.is_authenticated %}

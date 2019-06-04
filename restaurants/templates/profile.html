@@ -12,7 +12,21 @@
       </section>
     {% else %}
       {% if request.user.reservations_made.exists %}
+      
         <section class='my-reservations'>
+          <h3>My Fave Restaurants</h3>
+          
+          <!-- <ol>
+              {% for restaurant in reserv %}
+              {% if restaurant.fav %}
+                <li>
+        
+                  <a href="{% url 'restaurant_show' id=restaurant.pk %}"> {{ restaurant.name }}</a>
+              
+                </li>
+              {% endif %}
+              {% endfor %} -->
+            </ol>
           <h3>My reservations</h3>
           <ol>
             {% for reservation in request.user.reservations_made.all %}

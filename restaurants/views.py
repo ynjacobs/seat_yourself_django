@@ -14,7 +14,8 @@ def restaurants_list(request):
 
 def restaurant_show(request, id):
     restaurant = Restaurant.objects.get(pk=id)
-    context = {'restaurant': restaurant, 'title': restaurant.name}
+    restaurants = Restaurant.objects.filter(owner=restaurant.owner)
+    context = {'restaurant': restaurant, 'title': restaurant.name, 'restaurants': restaurants}
     if request.user.is_authenticated:
         context['reservations'] = restaurant.reservations.filter(user=request.user)
         context['reservation_form'] = ReservationForm()
@@ -92,11 +93,32 @@ def logout_view(request):
 
 @login_required
 def profile(request):
-    context = {'title': 'Profile'}
+    user_reservation = request.user
+
+    reserv = user_reservation.reserved_restaurants.all()
+
+    for res in reserv:
+        no_of_total_visits = Reservation.objects.filter(user = user_reservation, restaurant = res).count()
+        visits_in_last_6 = Reservation.objects.filter(user = user_reservation, restaurant = res).filter(date__gte= datetime.now() - timedelta(180)).count() 
+        if no_of_total_visits > 7 or visits_in_last_6 > 2:
+            res.fav = True
+        else:
+            res.fav = False
+    # for user_reservation in reserv.user:
+    #     no_of_total_visits = Reservation.objects.filter(user = user_reservation, restaurant = restaurants).count()
+    #     visits_in_last_6 = Reservation.objects.filter(user = user_reservation, restaurant = restaurants).filter(date__gte= datetime.now() - timedelta(180)).count()
+    #     if no_of_total_visits > 7 or visits_in_last_6 > 2:
+    #         user_reservation.vip_user = True
+    #     else:
+    #         user_reservation.vip_user = False
+
+    context = {'title': 'Profile', 'reserv': set(reserv)}
     if not Profile.exists_for_user(request.user):
         form = ProfileForm()
         context['form'] = form
     return render(request, 'profile.html', context)
+
+
 
 @login_required
 @require_http_methods(["POST"])
@@ -143,6 +165,8 @@ def frequent_customer(request, id):
         return render(request, 'reservations.html', context)
     else:
         return redirect(reverse('restaurant_show', args=[restaurant.pk]))
-        
+
+      
+
 
 
