@@ -14,7 +14,7 @@
     {% if user.is_authenticated %}
       {% if restaurant.owner == user %}
       <p> <a href="{% url 'restaurant_edit' id=restaurant.pk %}">Edit restaurant details</a> </p>
-        {% if restaurant.reservations.exists %}
+        <!-- {% if restaurant.reservations.exists %}
           <ol>
             {% for reservation in restaurant.reservations.all %}
               <li>
@@ -28,7 +28,7 @@
           </ol>
         {% else %}
           <p>No upcoming reservations</p>
-        {% endif %}
+        {% endif %} -->
       {% endif %}
 
      
