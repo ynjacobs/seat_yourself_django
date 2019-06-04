@@ -34,8 +34,10 @@
      
 
       {% if reservations %}
+      <a href="{% url 'reservations_show' id=restaurant.pk %}">Reservations</a>
       <ol>
         {% for reservation in reservations %}
+  
         <li>
               <p> <time datetime="{{ reservation.date_and_time }}">{{ reservation.date }} at {{ reservation.time }} </time> </p>
               <p> {{ reservation.user.profile.last_name }}, party of {{ reservation.party_size }} </p>

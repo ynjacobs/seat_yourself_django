@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+{% if reservations %}
+<ol>
+    {% for reservation in reservations %}
+
+    <li>
+        <p> <time datetime="{{ reservation.date_and_time }}">{{ reservation.date }} at {{ reservation.time }} </time>
+        </p>
+        <p> {{ reservation.user.profile.last_name }}, party of {{ reservation.party_size }} </p>
+        {% if reservation.notes %}
+        <p class='notes'>{{ reservation.notes }}</p>
+
+        {% endif %}
+        {% if reservation.user.vip_user %}
+        <h2>I am vip</h2>
+        {% endif %}
+    </li>
+    {% endfor %}
+</ol>
+{% endif %}
+{% endblock %}
