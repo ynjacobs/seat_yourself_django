@@ -2,6 +2,15 @@
 {% block content %}
 <main class='restaurant'>
     <h2>{{ restaurant.name }}</h2>
+    <img src="{{ restaurant.image }}" alt="image of restaurant">
+    <h3>{{ restaurant.description }}</h3>
+    <h3>Opening Time: {{ restaurant.opening_time }}</h3>
+    <h3>Closing Time: {{ restaurant.closing_time }}</h3>
+    <h3>Address: {{ restaurant.address }}</h3>
+    <h3>Number: {{ restaurant.phone }}</h3>
+    
+
+    
     {% if user.is_authenticated %}
       {% if restaurant.owner == user %}
       <p> <a href="{% url 'restaurant_edit' id=restaurant.pk %}">Edit restaurant details</a> </p>
@@ -21,6 +30,8 @@
           <p>No upcoming reservations</p>
         {% endif %}
       {% endif %}
+
+     
 
       {% if reservations %}
       <ol>

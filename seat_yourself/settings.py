@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'restaurants',
     'pages',
+    
 ]
 
 MIDDLEWARE = [
@@ -82,6 +83,8 @@ DATABASES = {
         'NAME': 'seatyourself_development',
         'HOST': '127.0.0.1',
         'PORT': '5432',
+        'USERNAME': 'yjacobs',
+        'PASSWORD': 97990611,
     }
 }
 
