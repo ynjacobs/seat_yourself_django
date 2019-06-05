@@ -152,15 +152,15 @@ def signup(request):
 def frequent_customer(request, id):
     restaurant = Restaurant.objects.get(pk=id)
     if restaurant.owner == request.user:
-        z_reservations = restaurant.reservations.all()
-        for reservation in z_reservations:
-            new_user = reservation.user
-            no_of_total_visits = Reservation.objects.filter(user = new_user, restaurant = restaurant).count()
-            visits_in_last_6 = Reservation.objects.filter(user = new_user, restaurant = restaurant).filter(date__gte= datetime.now() - timedelta(180)).count()
-            if no_of_total_visits > 7 or visits_in_last_6 > 2:
-                new_user.vip_user = True
-            else:
-                new_user.vip_user = False
+        z_reservations = restaurant.reservations.filter(ryrtr=egtnow).all()
+        # for reservation in z_reservations:
+        #     new_user = reservation.user
+        #     no_of_total_visits = Reservation.objects.filter(user = new_user, restaurant = restaurant).count()
+        #     visits_in_last_6 = Reservation.objects.filter(user = new_user, restaurant = restaurant).filter(date__gte= datetime.now() - timedelta(180)).count()
+        #     if no_of_total_visits > 7 or visits_in_last_6 > 2:
+        #         new_user.vip_user = True
+        #     else:
+        #         new_user.vip_user = False
         context = {'reservations': z_reservations}
         return render(request, 'reservations.html', context)
     else:

@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import Sum
+from datetime import datetime, timedelta
 
 class Profile(models.Model):
     first_name = models.CharField(max_length=255)
@@ -73,3 +74,13 @@ class Reservation(models.Model):
         time = self.time.strftime("%H:%M")
         return "{} {}".format(date, time)
 
+    def is_vip(self):
+        restaurant = self.restaurant
+        new_user = self.user
+        vip = False
+        no_of_total_visits = Reservation.objects.filter(user = new_user, restaurant = restaurant).count()
+        visits_in_last_6 = Reservation.objects.filter(user = new_user, restaurant = restaurant).filter(date__gte= datetime.now() - timedelta(180)).count()
+        if no_of_total_visits > 7 or visits_in_last_6 > 2:
+            vip = True
+        return vip
+        

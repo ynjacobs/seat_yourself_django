@@ -14,7 +14,7 @@
         <p class='notes'>{{ reservation.notes }}</p>
 
         {% endif %}
-        {% if reservation.user.vip_user %}
+        {% if reservation.is_vip %}
         <h2>I am vip</h2>
         {% endif %}
     </li>
