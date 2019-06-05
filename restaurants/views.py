@@ -166,6 +166,14 @@ def frequent_customer(request, id):
     else:
         return redirect(reverse('restaurant_show', args=[restaurant.pk]))
 
+
+def rest_name_search(request):
+    query = request.GET.get('query')
+
+    return render(request, 'search.html', {
+        'restaurant':Restaurant.objects.filter(name=query),
+        'query': query
+    })
       
 
 

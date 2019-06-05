@@ -14,5 +14,6 @@ urlpatterns = [
     path('profiles/create', views.profile_create, name="profile_create"),
     path('signup/', views.signup, name='signup'),
     path('restaurants/<int:id>/reservations/', views.frequent_customer, name='reservations_show'),
+    path('search/', views.rest_name_search, name='rest_search'),
     
 ]

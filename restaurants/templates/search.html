@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+
+    <h2>search results: <section>{{ restaurant.count }}</section></h2>
+    <ul>
+        {% for rest in restaurant %}
+            <li>
+                <a href="{% url 'restaurant_show' id=rest.pk %}">
+                <img class="images" src="{{ rest.image }}">
+                <p class="rest-title">{{ rest.name }}</p>
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+
+
+{% endblock %}

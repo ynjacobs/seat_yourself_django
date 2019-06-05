@@ -58,7 +58,7 @@ class ReservationForm(ModelForm):
         reservation_datetime = datetime(cleaned_date.year, cleaned_date.month, cleaned_date.day, cleaned_time.hour, cleaned_time.minute)
         if reservation_datetime < (datetime.now() + timedelta(minutes=30)):
             self.add_error('time', 'Reservation must be at least 30 minutes in future')
-        # print('tttt:', time, 'cccc', cleaned_time.hour)
+        
         if restaurant.closing_time.hour - cleaned_time.hour <= 1:
             self.add_error('time', 'You booked to close to closing time')
 

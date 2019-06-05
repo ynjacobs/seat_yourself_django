@@ -1,6 +1,15 @@
 <nav>
+
+
   <i class="logo fas fa-utensils"></i>
   <ul>
+      <li class="search-bar">
+          <form action="{% url 'rest_search' %}" method="get">
+            <label for="rest_search">
+              <input type="search" id="rest_search" placeholder="Search:" name="query" value="{{ query }}" />
+            </label>
+          </form>
+        </li>
     <li>
       <a class="underline" href="{% url 'restaurants_list' %}">All restaurants</a>
     </li>
@@ -21,6 +30,8 @@
         <li>
           <a class="underline"  href="{% url 'signup' %}">Sign up</a>
         </li>
+
+        
       {% endif %}
   </ul>
 </nav>
